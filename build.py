@@ -30,7 +30,9 @@ with open("setup.py", "r+") as f:
     setup_py = f.read()
     matches = version_regex.search(setup_py)
     version = StrictVersion(matches.group(1))
-    version = StrictVersion(f"{version.version[0]}.{version.version[1]}.{version.version[2]+1}")
+    version = StrictVersion(
+        f"{version.version[0]}.{version.version[1]}.{version.version[2]+1}"
+    )
     if args.version:
         version = StrictVersion(args.version)
     version = str(version)

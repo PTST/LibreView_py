@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/PTST/LibreView_Py",
     packages=setuptools.find_packages(),
-    install_requires=["requests >= 2.23.0"],
+    install_requires=["requests >= 2.31.0"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
