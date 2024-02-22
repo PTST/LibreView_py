@@ -1,1 +1,1 @@
-from LibreView.utils import *
+from LibreView.LibreView import LibreView

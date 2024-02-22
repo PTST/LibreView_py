@@ -1,7 +1,6 @@
 from typing import List
 import requests
-from LibreView.models.User import User
-from LibreView.models.Connection import Connection
+from LibreView.models import User, Connection
 
 
 def reauth_on_fail(func):

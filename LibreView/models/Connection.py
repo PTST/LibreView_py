@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 from uuid import UUID
 from dataclass_wizard import JSONWizard
-from LibreView.models.Sensor import Sensor
+
+# from LibreView.models import Sensor, GlucoseMeasurement
 from LibreView.models.GlucoseMeasurement import GlucoseMeasurement
+from LibreView.models.Sensor import Sensor
 
 
 @dataclass

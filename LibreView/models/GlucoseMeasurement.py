@@ -5,7 +5,6 @@ from dataclass_wizard import JSONWizard, json_field
 
 @dataclass
 class GlucoseMeasurement(JSONWizard):
-    _timestamp: str
     type: int
     value_in_mg_per_dl: int
     trend_arrow: int
@@ -15,18 +14,16 @@ class GlucoseMeasurement(JSONWizard):
     is_high: bool
     is_low: bool
     _factory_timestamp: str = json_field("FactoryTimestamp")  # type: ignore
+    _timestamp: str = json_field("Timestamp")  # type: ignore
+    trend_message: str | None = None
 
     @property
     def factory_timestamp(self) -> datetime:
         return self.parse_dt(self._factory_timestamp)
 
-    _timestamp: str = json_field("Timestamp")  # type: ignore
-
     @property
     def timestamp(self) -> datetime:
         return self.parse_dt(self._timestamp)
-
-    trend_message: str | None = None
 
     def parse_dt(self, val: str) -> datetime:
         splitted = val.split("/")

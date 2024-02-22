@@ -2,8 +2,7 @@ from dataclasses import dataclass
 from typing import Any, List, Dict
 from uuid import UUID
 from dataclass_wizard import JSONWizard
-from LibreView.models.Device import Device
-from LibreView.models.Practice import Practice
+from LibreView.models import Device, Practice
 
 
 @dataclass
