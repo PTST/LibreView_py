@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="LibreView",
-    version="0.1.2",
+    version="0.1.6",
     author="PTST",
     author_email="patrick@steffensen.io",
     description="API interface for LibreView / LibreLinkUp glucose readings",
