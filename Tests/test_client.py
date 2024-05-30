@@ -48,3 +48,6 @@ def test_connections():
     assert isinstance(gm.factory_timestamp, datetime)
     assert isinstance(gm.timestamp, datetime)
     assert isinstance(gm.trend_message, str) or gm.trend_message is None
+
+    assert libre.connections_dict is not None
+    assert len(libre.connections_dict) > 0

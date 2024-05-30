@@ -1,4 +1,4 @@
-from typing import List
+from typing import Optional
 import requests
 from LibreView.models import User, Connection
 
@@ -18,14 +18,13 @@ def reauth_on_fail(func):
 
 
 class API:
-    username: str
-    password: str
-    base_url = "https://api.libreview.io"
-    client = requests.session()
-    product = "llu.android"
-    version = "4.7"
-
-    def __init__(self, username: str, password: str):
+    def __init__(self, username: str, password: str, region: Optional[str] = None):
+        self.base_url = "https://api.libreview.io"
+        if region:
+            self.base_url = f"https://api-{region}.libreview.io"
+        self.client = requests.session()
+        self.product = "llu.android"
+        self.version = "4.7"
         self.username = username
         self.password = password
         self.client.headers["product"] = self.product
@@ -39,9 +38,15 @@ class API:
                 "email": self.username,
                 "password": self.password,
             },
+            verify=False
         )
         r.raise_for_status()
         content = r.json()
+
+        if content and content.get("status") == 0 and content["data"].get("redirect", False):
+            region = content["data"]["region"]
+            self.base_url = f"https://api-{region}.libreview.io"
+            return self.authenticate()
 
         # status 0 == login successfull
         if content and content.get("status") == 0:
@@ -68,6 +73,7 @@ class API:
             headers={
                 "Authorization": f"Bearer {token}",
             },
+            verify=False
         )
         r.raise_for_status()
         content = r.json()
@@ -79,14 +85,16 @@ class API:
     def get_user(self) -> User:
         r = self.client.get(
             f"{self.base_url}/user",
+            verify=False
         )
         r.raise_for_status()
         return User.from_dict(r.json()["data"]["user"])
 
     @reauth_on_fail
-    def get_connections(self) -> List[Connection]:
+    def get_connections(self) -> list[Connection]:
         r = self.client.get(
             f"{self.base_url}/llu/connections",
+            verify=False
         )
         r.raise_for_status()
         return Connection.from_list(r.json()["data"])

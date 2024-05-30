@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="LibreView",
-    version="0.0.5",
+    version="0.1.2",
     author="PTST",
     author_email="patrick@steffensen.io",
     description="API interface for LibreView / LibreLinkUp glucose readings",
@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/PTST/LibreView_Py",
     packages=setuptools.find_packages(),
-    install_requires=["requests >= 2.31.0"],
+    install_requires=["requests >= 2.31.0", "dataclass-wizard >= 0.22.3"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
