@@ -1,6 +1,7 @@
 from typing import Optional
 import requests
 from LibreView.models import User, Connection
+from hashlib import sha256
 
 
 def reauth_on_fail(func):
@@ -24,12 +25,11 @@ class API:
             self.base_url = f"https://api-{region}.libreview.io"
         self.client = requests.session()
         self.product = "llu.android"
-        self.version = "4.7"
+        self.version = "4.12.0"
         self.username = username
         self.password = password
         self.client.headers["product"] = self.product
         self.client.headers["version"] = self.version
-        self.authenticate()
 
     def authenticate(self):
         r = self.client.post(
@@ -38,18 +38,25 @@ class API:
                 "email": self.username,
                 "password": self.password,
             },
-            verify=False
         )
         r.raise_for_status()
         content = r.json()
 
-        if content and content.get("status") == 0 and content["data"].get("redirect", False):
+        if (
+            content
+            and content.get("status") == 0
+            and content["data"].get("redirect", False)
+        ):
             region = content["data"]["region"]
             self.base_url = f"https://api-{region}.libreview.io"
             return self.authenticate()
 
         # status 0 == login successfull
         if content and content.get("status") == 0:
+            account_id = content["data"]["user"]["id"]
+            self.client.headers["account-id"] = sha256(
+                account_id.encode("utf-8")
+            ).hexdigest()
             self.set_token(content["data"]["authTicket"]["token"])
             return
 
@@ -73,11 +80,14 @@ class API:
             headers={
                 "Authorization": f"Bearer {token}",
             },
-            verify=False
         )
         r.raise_for_status()
         content = r.json()
         if content and content.get("status") == 0:
+            account_id = content["data"]["user"]["id"]
+            self.client.headers["account-id"] = sha256(
+                account_id.encode("utf-8")
+            ).hexdigest()
             self.set_token(content["data"]["authTicket"]["token"])
             return
 
@@ -85,7 +95,6 @@ class API:
     def get_user(self) -> User:
         r = self.client.get(
             f"{self.base_url}/user",
-            verify=False
         )
         r.raise_for_status()
         return User.from_dict(r.json()["data"]["user"])
@@ -94,7 +103,6 @@ class API:
     def get_connections(self) -> list[Connection]:
         r = self.client.get(
             f"{self.base_url}/llu/connections",
-            verify=False
         )
         r.raise_for_status()
         return Connection.from_list(r.json()["data"])
