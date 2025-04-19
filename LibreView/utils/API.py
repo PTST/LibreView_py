@@ -14,7 +14,6 @@ def reauth_on_fail(func):
                 api.authenticate()
                 return func(*args)
             raise e
-
     return wrapper
 
 
@@ -30,6 +29,10 @@ class API:
         self.password = password
         self.client.headers["product"] = self.product
         self.client.headers["version"] = self.version
+
+    @property
+    def missing_auth_header(self):
+        return self.client.headers.get("Authorization") is None
 
     def authenticate(self):
         r = self.client.post(
@@ -75,6 +78,9 @@ class API:
         self.client.headers["Authorization"] = f"Bearer {token}"
 
     def accept_terms(self, token):
+        if (self.missing_auth_header):
+            self.authenticate()
+
         r = self.client.post(
             f"{self.base_url}/llu/auth/login",
             headers={
@@ -93,6 +99,9 @@ class API:
 
     @reauth_on_fail
     def get_user(self) -> User:
+        if (self.missing_auth_header):
+            self.authenticate()
+
         r = self.client.get(
             f"{self.base_url}/user",
         )
@@ -101,6 +110,9 @@ class API:
 
     @reauth_on_fail
     def get_connections(self) -> list[Connection]:
+        if (self.missing_auth_header):
+            self.authenticate()
+
         r = self.client.get(
             f"{self.base_url}/llu/connections",
         )

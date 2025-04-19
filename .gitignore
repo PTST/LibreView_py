@@ -142,3 +142,4 @@ creds.json
 .vscode/
 
 Pipfile.lock
+.DS_Store
