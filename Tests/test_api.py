@@ -12,7 +12,8 @@ PASSWORD: str = os.environ["libre_password"]
 
 def test_logon():
     api = API(USERNAME, PASSWORD)
-    assert api.client.headers.get("Authorization") != None
+    api.authenticate()
+    assert api.client.headers.get("Authorization") is not None
 
 
 def test_get_user():
