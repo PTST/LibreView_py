@@ -24,7 +24,7 @@ class API:
             self.base_url = f"https://api-{region}.libreview.io"
         self.client = requests.session()
         self.product = "llu.android"
-        self.version = "4.12.0"
+        self.version = "4.16.0"
         self.username = username
         self.password = password
         self.client.headers["product"] = self.product
@@ -118,3 +118,4 @@ class API:
         )
         r.raise_for_status()
         return Connection.from_list(r.json()["data"])
+
