@@ -1,0 +1,41 @@
+[project]
+name = "LibreView"
+version = "0.2.6"
+description = "API interface for LibreView / LibreLinkUp glucose readings"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "requests",
+    "dataclass-wizard",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/PTST/LibreView_Py"
+"Bug Tracker" = "https://github.com/PTST/LibreView_Py/issues"
+
+[dependency-groups]
+dev = [
+    "black",
+    "twine",
+    "pytest",
+    "pylint",
+    "pip-system-certs",
+    "pytest-cov",
+    "dotenv",
+]
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["LibreView"]
+
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "LibreView",
+  "README.md",
+  "pyproject.toml",
+  "LICENSE",
+]

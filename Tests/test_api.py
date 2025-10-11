@@ -5,6 +5,9 @@ from LibreView.models import Connection, Device, GlucoseMeasurement, Practice, S
 from LibreView.utils.API import API
 import logging
 
+from dotenv import load_dotenv
+load_dotenv()
+
 LOGGER = logging.getLogger(__name__)
 USERNAME: str = os.environ["libre_username"]
 PASSWORD: str = os.environ["libre_password"]
@@ -14,6 +17,7 @@ def test_logon():
     api = API(USERNAME, PASSWORD)
     api.authenticate()
     assert api.client.headers.get("Authorization") is not None
+    assert api.client.headers.get("account-id") is not None
 
 
 def test_get_user():
