@@ -118,3 +118,4 @@ class API:
         )
         r.raise_for_status()
         return Connection.from_list(r.json()["data"])
+
