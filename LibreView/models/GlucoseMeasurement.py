@@ -7,10 +7,11 @@ from dataclass_wizard import JSONWizard, json_field
 @dataclass
 class GlucoseMeasurement(JSONWizard):
     """Represents a single glucose measurement reading.
-    
+
     Contains glucose levels, trends, timestamps, and metadata about the measurement.
     Timestamps are parsed from the API's string format to Python datetime objects.
     """
+
     type: int
     value_in_mg_per_dl: int
     measurement_color: int
@@ -26,7 +27,7 @@ class GlucoseMeasurement(JSONWizard):
     @property
     def factory_timestamp(self) -> datetime:
         """Parse and return the factory timestamp as a datetime object.
-        
+
         Returns:
             datetime: The factory timestamp in UTC.
         """
@@ -35,7 +36,7 @@ class GlucoseMeasurement(JSONWizard):
     @property
     def timestamp(self) -> datetime:
         """Parse and return the measurement timestamp as a datetime object.
-        
+
         Returns:
             datetime: The measurement timestamp in UTC.
         """
@@ -43,10 +44,10 @@ class GlucoseMeasurement(JSONWizard):
 
     def parse_dt(self, val: str) -> datetime:
         """Parse a timestamp string from the API format to datetime.
-        
+
         Args:
             val: Timestamp string in format 'M/D/YYYY h:MM:SS AM/PM'.
-            
+
         Returns:
             datetime: Parsed datetime object.
         """

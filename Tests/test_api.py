@@ -6,6 +6,7 @@ from LibreView.utils.API import API
 import logging
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 LOGGER = logging.getLogger(__name__)

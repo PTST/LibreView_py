@@ -6,9 +6,10 @@ from dataclass_wizard import JSONWizard
 @dataclass
 class Practice(JSONWizard):
     """Represents a medical practice or clinic.
-    
+
     Contains practice identification, contact information, and address details.
     """
+
     id: UUID
     practice_id: str
     name: str

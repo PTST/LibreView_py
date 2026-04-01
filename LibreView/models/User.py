@@ -8,10 +8,11 @@ from LibreView.models import Device, Practice
 @dataclass
 class User(JSONWizard):
     """Represents a LibreView user account.
-    
+
     Contains user profile information, preferences, associated devices,
     and connected practices.
     """
+
     id: UUID
     first_name: str
     last_name: str

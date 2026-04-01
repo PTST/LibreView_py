@@ -10,10 +10,11 @@ from LibreView.models.Sensor import Sensor
 @dataclass
 class Connection(JSONWizard):
     """Represents a connection to a patient/monitoring session.
-    
+
     Contains information about the patient, their current glucose sensor,
     latest measurement, and target glucose ranges.
     """
+
     id: UUID
     patient_id: UUID
     country: str
