@@ -1,6 +1,6 @@
 [project]
 name = "LibreView"
-version = "0.2.6"
+version = "0.3.0"
 description = "API interface for LibreView / LibreLinkUp glucose readings"
 readme = "README.md"
 requires-python = ">=3.11"
